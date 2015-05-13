@@ -48,3 +48,20 @@ dependencies {
 }
 ```
 
+### 调试
+
+#### Log 打印
+
+每个 Activity, Fragment, Adapter 之类的文件中都以各自文件名为 Log 标识。
+
+如:
+
+```
+TAG 定义
+
+private final static String TAG = "ExampleActivity";
+
+Log.debug(TAG, logMessage);
+
+```
+
