@@ -28,16 +28,22 @@ new-structure
 └─ settings.gradle
 ```
 
-主要的区别在于，新的结构明确的分开了'source sets' ( `main`, `androidTest` )，Gradle的一个理念。 你可以做到，例如，添加源组 ‘paid’ 和 ‘free’ 在 src 中，这将成为您的应用程序的付费和免费的两种模式的源代码。
+结构明确的分开了'source sets' ( `main`, `androidTest` ) 
 
-你的项目引用第三方项目库时（例如，library-foobar ），拥有一个顶级包名 `app` 从第三方库项目区分你的应用程序是非常有用的。 然后 `settings.gradle` 不断引用这些库项目，其中 `app/build.gradle` 可以引用。
+例如，添加源组 ‘paid’ 和 ‘free’ 在 src 中，这将成为您的应用程序的付费和免费的两种模式的源代码。
+
+你的项目引用第三方项目库时（例如，library-foobar ），拥有一个顶级包名 `app` 从第三方库项目区分你的应用程序是非常有用的. 然后 `settings.gradle` 不断引用这些库项目，其中 `app/build.gradle` 可以引用。
 
 ### Java 包结构
 
 与后端交互负责网络处理类，放在 `network` 包下面。
+
 一些控制器角色的类是应用程序级别的，同时是接近系统的。 这些类放在 `managers` 包下面。 
+
 一些繁杂的数据处理类，比如说 "DateUtils", 放在 `utils` 包下面。 
+
 一些自定义的视图放在 `widgets` 包下面。
+
 适配器 Adapter 是在数据和视图之间。然而他们通常需要通过 `getView()` 方法来导出一些视图， 所以你可以将 `adapters` 包放在 `views` 包里面。
 
 总而言之，以最接近用户而不是最接近后端去安排他们。
@@ -58,7 +64,7 @@ com.futurice.project
 
 ### Gradle 配置
 
-**使用 Maven **依赖方案代替使用导入jar包方案 如果在你的项目中你明确使用 jar 文件，那么它们可能成为永久的版本，如 `2.1.1` .下载 jar 包更新它们是很繁琐的， 这个问题 Maven 很好的解决了，这在 Android Gradle 构建中也是推荐的方法。你可以指定版本的一个范围，如 `2.1.+` ,然后 Maven 会自动升级到制定的最新版本，例如：
+**使用 Maven ** 依赖方案代替使用导入 jar 包方案, 如果在你的项目中明确使用 jar 文件，那么它们可能成为永久的版本，如 `2.1.1` 。下载 jar 包更新它们是很繁琐的， 这个问题 Maven 很好的解决了，这在 Android Gradle 构建中也是推荐的方法。你可以指定版本的一个范围，如 `2.1.+` , 然后 Maven 会自动升级到制定的最新版本. 例如：
 
 ```
 dependencies {
@@ -91,29 +97,38 @@ Log.debug(TAG, logMessage);
 
 ### 命名
 
-##### 1.变量名
+##### 1. 变量名
+
 以m开头的驼峰命名规则。如：mExample
+
 尽量不要用_下划线命名。
 
-##### 2.Layout的id创建命名规则
+##### 2. Layout的id创建命名规则
+
 采用下划线命名方式。如：edit_example
 
-##### 3.常量
+##### 3. 常量
+
 以大写命名。如：EXAMPLE
 
-##### 4.文字提示
+##### 4. 文字提示
+
 所有文字提示，都应该使用strings.xml配置文件。
 
-##### 5.参数名
+##### 5. 参数名
+
 驼峰命名规则。如：example
 
-##### 6.所有使用的常量必须使用Key Word 代替
+##### 6. 所有使用的常量必须使用Key Word 代替
+
 如规则3，例子 private static final int EXAMPLE = 1;
 
 ##### 7. 方法名
+
 驼峰命名规则。如：exampleTest
 
 ##### 8. Layout 文件命名
+
 采用下划线命名方式。如：activity_example.xml
 
 对应不同的功能替换前面部分名称，如：Activity、Fragment、Item、etc.
