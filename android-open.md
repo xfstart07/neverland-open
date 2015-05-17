@@ -139,3 +139,13 @@ Log.debug(TAG, logMessage);
 
 例如：`fragment_contact_details.xml`, `view_primary_button.xml`, `activity_main.xml`.
 
+**ID** 同样前缀表明类型的习惯，如 '@+id/tx_foo_bar'
+
+#### 颜色
+
+统一由设计给出颜色定义。开发者不允许定义颜色。
+
+#### 图片
+
+统一由设计给出图片命名。
+
