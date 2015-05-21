@@ -82,16 +82,16 @@ dependencies {
 
 #### Log 打印
 
-每个 Activity, Fragment, Adapter 之类的文件中都以各自文件名为 Log 标识。
+每个 Activity, Fragment, Adapter 之类的文件中需要打印最好以各自文件名为 Log 标识。
 
 如:
 
 ```
 TAG 定义
 
-private final static String TAG = "ExampleActivity";
+private final static String TAG = ExampleClass.class.getSimpleName();
 
-Log.debug(TAG, logMessage);
+Log.d(TAG, logMessage);
 
 ```
 
