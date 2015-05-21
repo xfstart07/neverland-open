@@ -157,21 +157,10 @@ Log.debug(TAG, logMessage);
 
 ##### 注释方式
 
-主要方式
-
-```
-/**
-
- */
-
-//
-
-```
-
 例如：
 
 ```
-/**
+  /**
    * Initializes this store with the given context.
    */
   private void initWithContext(Context context, String sharedPrefsName) {
