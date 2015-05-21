@@ -4,7 +4,7 @@
 
 ### 开发工具
 
-使用 Android Studio + gradle 
+使用 Android Studio + gradle
 
 ### 工程结构
 
@@ -28,7 +28,7 @@ new-structure
 └─ settings.gradle
 ```
 
-结构明确的分开了'source sets' ( `main`, `androidTest` ) 
+结构明确的分开了'source sets' ( `main`, `androidTest` )
 
 例如，添加源组 ‘paid’ 和 ‘free’ 在 src 中，这将成为您的应用程序的付费和免费的两种模式的源代码。
 
@@ -38,9 +38,9 @@ new-structure
 
 与后端交互负责网络处理类，放在 `network` 包下面。
 
-一些控制器角色的类是应用程序级别的，同时是接近系统的。 这些类放在 `managers` 包下面。 
+一些控制器角色的类是应用程序级别的，同时是接近系统的。 这些类放在 `managers` 包下面。
 
-一些繁杂的数据处理类，比如说 "DateUtils", 放在 `utils` 包下面。 
+一些繁杂的数据处理类，比如说 "DateUtils", 放在 `utils` 包下面。
 
 一些自定义的视图放在 `widgets` 包下面。
 
@@ -149,3 +149,33 @@ Log.debug(TAG, logMessage);
 
 统一由设计给出图片命名。
 
+### 注释
+
+1. Model 中的字段需要有注释
+
+2. 对于较复杂的逻辑或重要代码块，尽量加上注释
+
+##### 注释方式
+
+主要方式
+
+```
+/**
+
+ */
+
+//
+
+```
+
+例如：
+
+```
+/**
+   * Initializes this store with the given context.
+   */
+  private void initWithContext(Context context, String sharedPrefsName) {
+    // Time ourselves
+    long start = SystemClock.uptimeMillis();
+  }
+```
