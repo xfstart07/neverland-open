@@ -2,7 +2,7 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>Neverland-open by xfstart07</title>
+    <title>android-open by xfstart07</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -11,8 +11,8 @@
   </head>
   <body>
     <section class="page-header">
-      <h1 class="project-name">Neverland-open</h1>
-      <h2 class="project-tagline">开放文档</h2>
+      <h1 class="project-name">android-open</h1>
+      <h2 class="project-tagline">Android 开发最佳实践</h2>
       <a href="https://github.com/xfstart07/neverland-open" class="btn">View on GitHub</a>
       <a href="https://github.com/xfstart07/neverland-open/zipball/master" class="btn">Download .zip</a>
       <a href="https://github.com/xfstart07/neverland-open/tarball/master" class="btn">Download .tar.gz</a>
@@ -20,19 +20,212 @@
 
     <section class="main-content">
       <h1>
-<a id="开放文档" class="anchor" href="#%E5%BC%80%E6%94%BE%E6%96%87%E6%A1%A3" aria-hidden="true"><span class="octicon octicon-link"></span></a>开放文档</h1>
+<a id="android-开发最佳实践" class="anchor" href="#android-%E5%BC%80%E5%8F%91%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Android 开发最佳实践</h1>
 
-<p>用户存放团队的各种开放文档。</p>
+<p><a href="https://github.com/futurice/android-best-practices/blob/master/translations/Chinese/README.cn.md">参考 Futurice Android-Best-Practices </a></p>
+
+<h3>
+<a id="开发工具" class="anchor" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7" aria-hidden="true"><span class="octicon octicon-link"></span></a>开发工具</h3>
+
+<p>使用 Android Studio + gradle</p>
+
+<h3>
+<a id="工程结构" class="anchor" href="#%E5%B7%A5%E7%A8%8B%E7%BB%93%E6%9E%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>工程结构</h3>
+
+<pre><code>new-structure
+├─ library-foobar
+├─ app
+│  ├─ libs
+│  ├─ src
+│  │  ├─ androidTest
+│  │  │  └─ java
+│  │  │     └─ com/futurice/project
+│  │  └─ main
+│  │     ├─ java
+│  │     │  └─ com/futurice/project
+│  │     ├─ res
+│  │     └─ AndroidManifest.xml
+│  ├─ build.gradle
+│  └─ proguard-rules.pro
+├─ build.gradle
+└─ settings.gradle
+</code></pre>
+
+<p>结构明确的分开了'source sets' ( <code>main</code>, <code>androidTest</code> )</p>
+
+<p>例如，添加源组 ‘paid’ 和 ‘free’ 在 src 中，这将成为您的应用程序的付费和免费的两种模式的源代码。</p>
+
+<p>你的项目引用第三方项目库时（例如，library-foobar ），拥有一个顶级包名 <code>app</code> 从第三方库项目区分你的应用程序是非常有用的. 然后 <code>settings.gradle</code> 不断引用这些库项目，其中 <code>app/build.gradle</code> 可以引用。</p>
+
+<h3>
+<a id="java-包结构" class="anchor" href="#java-%E5%8C%85%E7%BB%93%E6%9E%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>Java 包结构</h3>
+
+<p>与后端交互负责网络处理类，放在 <code>network</code> 包下面。</p>
+
+<p>一些控制器角色的类是应用程序级别的，同时是接近系统的。 这些类放在 <code>managers</code> 包下面。</p>
+
+<p>一些繁杂的数据处理类，比如说 "DateUtils", 放在 <code>utils</code> 包下面。</p>
+
+<p>一些自定义的视图放在 <code>widgets</code> 包下面。</p>
+
+<p>适配器 Adapter 是在数据和视图之间。然而他们通常需要通过 <code>getView()</code> 方法来导出一些视图， 所以你可以将 <code>adapters</code> 包放在 <code>views</code> 包里面。</p>
+
+<p>总而言之，以最接近用户而不是最接近后端去安排他们。</p>
+
+<pre><code>com.futurice.project
+├─ network
+├─ models
+├─ managers
+├─ utils
+├─ fragments
+└─ views
+   ├─ adapters
+   ├─ actionbar
+   ├─ widgets
+   └─ notifications
+</code></pre>
+
+<h3>
+<a id="gradle-配置" class="anchor" href="#gradle-%E9%85%8D%E7%BD%AE" aria-hidden="true"><span class="octicon octicon-link"></span></a>Gradle 配置</h3>
+
+<p>*<em>使用 Maven *</em> 依赖方案代替使用导入 jar 包方案, 如果在你的项目中明确使用 jar 文件，那么它们可能成为永久的版本，如 <code>2.1.1</code> 。下载 jar 包更新它们是很繁琐的， 这个问题 Maven 很好的解决了，这在 Android Gradle 构建中也是推荐的方法。你可以指定版本的一个范围，如 <code>2.1.+</code> , 然后 Maven 会自动升级到制定的最新版本. 例如：</p>
+
+<pre><code>dependencies {
+    compile 'com.netflix.rxjava:rxjava-core:0.19.+'
+    compile 'com.netflix.rxjava:rxjava-android:0.19.+'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.4.+'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.4.+'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.4.+'
+    compile 'com.squareup.okhttp:okhttp:2.0.+'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.+'
+}
+</code></pre>
+
+<h3>
+<a id="调试" class="anchor" href="#%E8%B0%83%E8%AF%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>调试</h3>
+
+<h4>
+<a id="log-打印" class="anchor" href="#log-%E6%89%93%E5%8D%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>Log 打印</h4>
+
+<p>每个 Activity, Fragment, Adapter 之类的文件中需要打印最好以各自文件名为 Log 标识。</p>
+
+<p>如:</p>
+
+<pre><code>TAG 定义
+
+private final static String TAG = ExampleClass.class.getSimpleName();
+
+Log.d(TAG, logMessage);
+
+</code></pre>
+
+<h3>
+<a id="命名" class="anchor" href="#%E5%91%BD%E5%90%8D" aria-hidden="true"><span class="octicon octicon-link"></span></a>命名</h3>
+
+<h5>
+<a id="1-变量名" class="anchor" href="#1-%E5%8F%98%E9%87%8F%E5%90%8D" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. 变量名</h5>
+
+<p>以m开头的驼峰命名规则。如：mExample</p>
+
+<p>尽量不要用_下划线命名。</p>
+
+<h5>
+<a id="2-layout的id创建命名规则" class="anchor" href="#2-layout%E7%9A%84id%E5%88%9B%E5%BB%BA%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Layout的id创建命名规则</h5>
+
+<p>采用下划线命名方式。如：edit_example</p>
+
+<h5>
+<a id="3-常量" class="anchor" href="#3-%E5%B8%B8%E9%87%8F" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. 常量</h5>
+
+<p>以大写命名。如：EXAMPLE</p>
+
+<h5>
+<a id="4-文字提示" class="anchor" href="#4-%E6%96%87%E5%AD%97%E6%8F%90%E7%A4%BA" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. 文字提示</h5>
+
+<p>所有文字提示，都应该使用strings.xml配置文件。</p>
+
+<h5>
+<a id="5-参数名" class="anchor" href="#5-%E5%8F%82%E6%95%B0%E5%90%8D" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. 参数名</h5>
+
+<p>驼峰命名规则。如：example</p>
+
+<h5>
+<a id="6-所有使用的常量必须使用key-word-代替" class="anchor" href="#6-%E6%89%80%E6%9C%89%E4%BD%BF%E7%94%A8%E7%9A%84%E5%B8%B8%E9%87%8F%E5%BF%85%E9%A1%BB%E4%BD%BF%E7%94%A8key-word-%E4%BB%A3%E6%9B%BF" aria-hidden="true"><span class="octicon octicon-link"></span></a>6. 所有使用的常量必须使用Key Word 代替</h5>
+
+<p>如规则3，例子 private static final int EXAMPLE = 1;</p>
+
+<h5>
+<a id="7-方法名" class="anchor" href="#7-%E6%96%B9%E6%B3%95%E5%90%8D" aria-hidden="true"><span class="octicon octicon-link"></span></a>7. 方法名</h5>
+
+<p>驼峰命名规则。如：exampleTest</p>
+
+<h5>
+<a id="8-layout-文件命名" class="anchor" href="#8-layout-%E6%96%87%E4%BB%B6%E5%91%BD%E5%90%8D" aria-hidden="true"><span class="octicon octicon-link"></span></a>8. Layout 文件命名</h5>
+
+<p>采用下划线命名方式。如：activity_example.xml</p>
+
+<p>对应不同的功能替换前面部分名称，如：Activity、Fragment、Item、etc.</p>
+
+<h3>
+<a id="资源文件-resources" class="anchor" href="#%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6-resources" aria-hidden="true"><span class="octicon octicon-link"></span></a>资源文件 Resources</h3>
+
+<p><strong>命名</strong> 遵循前缀表明类型的习惯，形如 <code>type_foo_bar.xml</code>。</p>
+
+<p>例如：<code>fragment_contact_details.xml</code>, <code>view_primary_button.xml</code>, <code>activity_main.xml</code>.</p>
+
+<p><strong>ID</strong> 同样前缀表明类型的习惯，如 '@+id/tx_foo_bar'</p>
+
+<h4>
+<a id="颜色" class="anchor" href="#%E9%A2%9C%E8%89%B2" aria-hidden="true"><span class="octicon octicon-link"></span></a>颜色</h4>
+
+<p>统一由设计给出颜色定义。开发者不允许定义颜色。</p>
+
+<h4>
+<a id="图片" class="anchor" href="#%E5%9B%BE%E7%89%87" aria-hidden="true"><span class="octicon octicon-link"></span></a>图片</h4>
+
+<p>统一由设计给出图片命名。</p>
+
+<h3>
+<a id="注释" class="anchor" href="#%E6%B3%A8%E9%87%8A" aria-hidden="true"><span class="octicon octicon-link"></span></a>注释</h3>
+
+<ol>
+<li><p>Model 中的字段需要有注释</p></li>
+<li><p>对于较复杂的逻辑或重要代码块，尽量加上注释</p></li>
+</ol>
+
+<h5>
+<a id="注释方式" class="anchor" href="#%E6%B3%A8%E9%87%8A%E6%96%B9%E5%BC%8F" aria-hidden="true"><span class="octicon octicon-link"></span></a>注释方式</h5>
+
+<p>例如：</p>
+
+<pre><code>  /**
+   * Initializes this store with the given context.
+   */
+  private void initWithContext(Context context, String sharedPrefsName) {
+    // Time ourselves
+    long start = SystemClock.uptimeMillis();
+  }
+</code></pre>
 
       <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/xfstart07/neverland-open">Neverland-open</a> is maintained by <a href="https://github.com/xfstart07">xfstart07</a>.</span>
+        <span class="site-footer-owner"><a href="https://github.com/xfstart07/neverland-open">android-open</a> is maintained by <a href="https://github.com/xfstart07">xfstart07</a>.</span>
 
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
 
     </section>
 
-  
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-24833524-3");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
   </body>
 </html>
 
