@@ -65,7 +65,7 @@ com.futurice.project
 
 ### Gradle 配置
 
-**使用 Maven 或 [JCenter](https://bintray.com/bintray/jcenter) ** 依赖方案代替使用导入 jar 包方案, 如果在你的项目中明确使用 jar 文件，那么它们可能成为永久的版本，如 `2.1.1` 。下载 jar 包更新它们是很繁琐的， 这个问题 Maven 很好的解决了，这在 Android Gradle 构建中也是推荐的方法。你可以指定版本的一个范围，如 `2.1.+` , 然后 Maven 会自动升级到制定的最新版本. 例如：
+**使用 Maven 或 [JCenter](https://bintray.com/bintray/jcenter)** 依赖方案代替使用导入 jar 包方案, 如果在你的项目中明确使用 jar 文件，那么它们可能成为永久的版本，如 `2.1.1` 。下载 jar 包更新它们是很繁琐的， 这个问题 Maven 很好的解决了，这在 Android Gradle 构建中也是推荐的方法。你可以指定版本的一个范围，如 `2.1.+` , 然后 Maven 会自动升级到制定的最新版本. 例如：
 
 ```
 dependencies {
