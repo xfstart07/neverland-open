@@ -98,41 +98,29 @@ Log.d(TAG, logMessage);
 
 ### 命名
 
-##### 1. 变量名
+##### 变量名
 
-以 m 开头的驼峰命名规则。如：mExample
+以 `m` 开头的驼峰命名规则。
+
+例如: `mExample`
 
 尽量不要用 `_` 下划线命名。
 
-##### 2. Layout 的 id 创建命名规则
+##### 常量
 
-采用下划线命名方式。如：edit_example
+例如:  `private static final int TYPE_FOO_BAR = 1;`
 
-##### 3. 常量
+##### 参数名
 
-以大写命名。如：EXAMPLE
+驼峰命名规则。
 
-##### 4. 文字提示
+例如: `fooBar`
 
-所有文字提示，都应该使用 `strings.xml` 配置文件。
+##### 方法名
 
-##### 5. 参数名
+驼峰命名规则。
 
-驼峰命名规则。如：example
-
-##### 6. 所有使用的常量必须使用 Key Word 代替
-
-如规则3，例子 private static final int EXAMPLE = 1;
-
-##### 7. 方法名
-
-驼峰命名规则。如：exampleTest
-
-##### 8. Layout 文件命名
-
-采用下划线命名方式。如：activity_example.xml
-
-对应不同的功能替换前面部分名称，如：Activity、Fragment、Item、etc.
+例如: `fooBar`
 
 ### 资源文件 Resources
 
@@ -168,3 +156,9 @@ Log.d(TAG, logMessage);
     long start = SystemClock.uptimeMillis();
   }
 ```
+对于注释的态度要想写文档一样，这样团队的其他人容易明白代码的意图和想法。注释还是一种团队的离线交流方式。
+
+##### 文字提示
+
+所有文字提示，都应该使用 `strings.xml` 配置文件。
+
