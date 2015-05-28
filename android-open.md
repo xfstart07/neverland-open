@@ -106,6 +106,12 @@ Log.d(TAG, logMessage);
 
 尽量不要用 `_` 下划线命名。
 
+对于部分变量名和参数名相同，可以在变量名加 `m` 来区别。
+
+对于组件命名，请在尾部加上标识。
+
+例如 `fooBarLayout`, `fooBarListener`, `fooBarButton`
+
 ##### 常量
 
 例如:  `private static final int TYPE_FOO_BAR = 1;`
