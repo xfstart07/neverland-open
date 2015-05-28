@@ -100,9 +100,9 @@ Log.d(TAG, logMessage);
 
 ##### 变量名
 
-以 `m` 开头的驼峰命名规则。
+驼峰命名规则。
 
-例如: `mExample`
+例如: `typeFooBar`
 
 尽量不要用 `_` 下划线命名。
 
@@ -128,7 +128,7 @@ Log.d(TAG, logMessage);
 
 例如：`fragment_contact_details.xml`, `view_primary_button.xml`, `activity_main.xml`.
 
-**ID** 同样前缀表明类型的习惯，如 '@+id/tx_foo_bar'
+**ID** 同样前缀表明类型的习惯，如 `@+id/tx_foo_bar`
 
 #### 颜色
 
