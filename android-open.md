@@ -85,6 +85,10 @@ dependencies {
 
 每个 Activity, Fragment, Adapter 之类的文件中需要打印最好以各自文件名为 Log 标识。
 
+使用 Log 库控制不同环境打印的内容
+
+https://github.com/liaohuqiu/android-CLog
+
 如:
 
 ```
@@ -92,7 +96,7 @@ TAG 定义
 
 private final static String TAG = ExampleClass.class.getSimpleName();
 
-Log.d(TAG, logMessage);
+CLog.d(TAG, logMessage);
 
 ```
 
